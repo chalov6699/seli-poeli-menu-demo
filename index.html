@@ -1,0 +1,29 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Сели, поели — меню</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#e9eef4;color:#172333;font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:820px;margin:auto;padding:22px 16px 100px}header,footer{display:flex;align-items:center;justify-content:space-between;gap:14px}a{color:#00699d;text-decoration:none;font-weight:650}.hero{margin:18px 0 28px;padding:clamp(24px,6vw,54px);border-radius:32px;background:linear-gradient(135deg,#102841,#2279aa);color:white}h1{font-size:clamp(42px,9vw,83px);letter-spacing:-.07em;line-height:.95;margin:14px 0}h2{margin-bottom:12px}nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}button{font:inherit;border:0;border-radius:100px;background:white;padding:10px 15px;color:inherit;cursor:pointer}button[aria-pressed=true]{background:#00699d;color:white}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}article{background:white;border-radius:22px;padding:20px}article h3{margin:8px 0}article p{color:#485968}small{color:#485968}footer{position:fixed;bottom:0;left:0;right:0;padding:15px max(16px,calc((100vw - 788px)/2));background:#fffffff0;backdrop-filter:blur(18px)}:focus-visible{outline:3px solid #bd5200;outline-offset:3px}
+</style>
+<main><header><strong>Сели, поели</strong><a href="https://t.me/SELIPOELI2">Telegram ↗</a></header>
+<div class="hero"><span>Концепция сайта</span><h1>Сели,<br>поели.</h1><p>Выберите, что хочется сегодня.</p></div>
+<h2>Меню</h2><p><small>Пример оформления. Блюда, состав и цены приведены для демонстрации.</small></p>
+<nav aria-label="Категории меню"></nav><section aria-label="Блюда" aria-live="polite"></section></main>
+<footer><strong>Сели, поели</strong><a href="https://t.me/SELIPOELI2">Открыть Telegram ↗</a></footer>
+<script>
+const dishes=[
+['Горячее','Куриная котлета','С картофельным пюре и зеленью',320],
+['Горячее','Паста с грибами','Со сливочным соусом',390],
+['Супы','Борщ','Со сметаной и зеленью',260],
+['Супы','Куриный суп','С домашней лапшой',240],
+['Салаты','Овощной салат','Огурцы, томаты и зелень',210],
+['Напитки','Ягодный морс','Порция 250 мл',120]
+];
+const nav=document.querySelector('nav'), menu=document.querySelector('section');
+function render(category){
+ for(const button of nav.children) button.setAttribute('aria-pressed',String(button.textContent===category));
+ menu.innerHTML=dishes.filter(([group])=>category==='Все'||group===category).map(([group,name,description,price])=>`<article><small>${group}</small><h3>${name}</h3><p>${description}</p><strong>${price} ₽</strong></article>`).join('');
+}
+for(const category of ['Все',...new Set(dishes.map(([group])=>group))]){
+ const button=document.createElement('button');button.type='button';button.textContent=category;
+ button.addEventListener('click',()=>render(category));nav.append(button);
+}
+render('Все');
+</script></html>
